@@ -1,0 +1,46 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant Disease Detector</title>
+<style>
+body{font-family: Arial, Helvetica, sans-serif; max-width: 720px; margin: 40px auto;}
+.card{padding:20px;border-radius:8px;border:1px solid #ddd}
+input[type=file]{display:block;margin:10px 0}
+.result{margin-top:20px;padding:12px;background:#f7f7f7;border-radius:6px}
+</style>
+</head>
+<body>
+<h1>Plant Disease Detector</h1>
+<div class="card">
+<form action="/predict" method="post" enctype="multipart/form-data">
+<label for="file">Upload leaf image (jpg/png):</label>
+<input type="file" id="file" name="file" accept="image/*" required>
+<button type="submit">Predict</button>
+</form>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul style="color: red;">
+{% for message in messages %}
+<li>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+{% if label %}
+<div class="result">
+<h3>Result</h3>
+<p><strong>File:</strong> {{ filename }}</p>
+<p><strong>Prediction:</strong> {{ label }}</p>
+<p><strong>Confidence:</strong> {{ confidence }}</p>
+</div>
+{% endif %}
+</div>
+</body>
+</html>
